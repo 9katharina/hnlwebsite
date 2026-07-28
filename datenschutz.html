@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Datenschutz — Her Next Level</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink:      #FF0090;
+    --black:     #0A0A0A;
+    --cream:     #F5F5F0;
+    --card-dark: #121212;
+    --line-dark: rgba(245,245,240,0.14);
+    --line-light:rgba(10,10,10,0.12);
+    --muted-dark: rgba(245,245,240,0.62);
+    --muted-light:rgba(10,10,10,0.62);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; overflow-x:hidden; }
+  body { background:var(--black); color:var(--cream); font-family:'DM Sans',sans-serif; font-weight:400; }
+  img { max-width:100%; display:block; }
+  a { color:inherit; }
+  button, input, textarea { font-family:inherit; }
+
+  .container { max-width:1240px; margin:0 auto; padding:0 40px; }
+  @media (max-width:640px) { .container { padding:0 24px; } }
+
+  h1,h2,h3,.headline {
+    font-family:'Anton',sans-serif; text-transform:uppercase;
+    line-height:0.95; letter-spacing:-0.01em; font-weight:400;
+  }
+  .headline { font-size:clamp(48px,6.5vw,104px); }
+  .eyebrow {
+    font-family:'DM Mono',monospace; font-size:11px; letter-spacing:0.22em;
+    text-transform:uppercase; color:var(--pink);
+  }
+
+  section.section { padding:120px 0; position:relative; }
+  @media (max-width:640px) { section.section { padding:72px 0; } }
+  .section-dark { background:var(--black); color:var(--cream); }
+
+  .reveal { opacity:0; transform:translateY(24px); transition:opacity .5s ease, transform .5s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+
+  #scroll-track { position:fixed; top:0; right:0; width:4px; height:100%; z-index:200; pointer-events:none; }
+  #scroll-bar { width:100%; height:0%; background:var(--pink); }
+
+  /* ============ NAV V2 (burger) ============ */
+  .site-nav-v2 { position:fixed; top:0; left:0; right:0; z-index:1000; padding:22px 0; transition:background .3s, border-color .3s; border-bottom:1px solid transparent; }
+  .site-nav-v2 .container { display:flex; align-items:center; justify-content:space-between; }
+  .site-nav-v2.scrolled { background:rgba(10,10,10,0.92); backdrop-filter:blur(12px); border-color:var(--line-dark); }
+  .nav-logo-v2 { font-family:'Anton',sans-serif; font-size:20px; letter-spacing:0.06em; text-transform:uppercase; color:var(--cream); text-decoration:none; }
+  .nav-logo-v2 .pink { color:var(--pink); }
+
+  .burger-btn { width:44px; height:44px; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:6px; background:none; border:none; cursor:pointer; position:relative; z-index:1002; }
+  .burger-btn span { width:24px; height:2px; background:var(--cream); display:block; transition:transform .3s ease, opacity .3s ease; }
+  .burger-btn.open span:nth-child(1) { transform:translateY(8px) rotate(45deg); }
+  .burger-btn.open span:nth-child(2) { opacity:0; }
+  .burger-btn.open span:nth-child(3) { transform:translateY(-8px) rotate(-45deg); }
+
+  .nav-overlay {
+    position:fixed; inset:0; z-index:1001; background:var(--black);
+    transform:translateX(100%); transition:transform .4s cubic-bezier(.7,0,.2,1);
+    display:flex; flex-direction:column; justify-content:space-between;
+    padding:120px 40px 40px; overflow-y:auto;
+  }
+  .nav-overlay.open { transform:translateX(0); }
+  @media (max-width:640px) { .nav-overlay { padding:110px 24px 32px; } }
+
+  .nav-overlay-links { display:flex; flex-direction:column; gap:6px; }
+  .nav-overlay-links a {
+    font-family:'Anton',sans-serif; font-size:clamp(36px,6vw,68px); text-transform:uppercase;
+    color:var(--cream); text-decoration:none; position:relative; display:inline-flex; align-items:baseline; gap:16px;
+    width:fit-content; opacity:0; transform:translateY(20px); transition:opacity .3s ease, transform .3s ease, color .2s ease;
+  }
+  .nav-overlay.open .nav-overlay-links a { opacity:1; transform:translateY(0); }
+  .nav-overlay-links a .nav-num { font-family:'DM Mono',monospace; font-size:11px; color:var(--pink); }
+  .nav-overlay-links a::after {
+    content:''; position:absolute; left:0; bottom:6px; width:0; height:2px; background:var(--pink); transition:width .25s ease;
+  }
+  .nav-overlay-links a:hover::after { width:100%; }
+  .nav-overlay-links a:hover { color:var(--pink); }
+  .nav-overlay-links a.active { color:var(--pink); }
+  .nav-dot { display:none; width:8px; height:8px; border-radius:50%; background:var(--pink); }
+  .nav-overlay-links a.active .nav-dot { display:inline-block; }
+  @media (max-width:640px) { .nav-overlay-links a { font-size:clamp(32px,9vw,48px); } }
+
+  .nav-overlay-foot { display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:24px; }
+  .nav-overlay-meta { font-family:'DM Mono',monospace; font-size:11px; color:var(--muted-dark); display:flex; gap:16px; flex-wrap:wrap; }
+  .nav-overlay-meta a { color:var(--muted-dark); text-decoration:none; }
+  .nav-overlay-meta a:hover { color:var(--cream); }
+  .nav-overlay-cta {
+    display:inline-flex; align-items:center; gap:8px; background:var(--pink); color:var(--black);
+    border-radius:999px; padding:14px 26px; font-size:14px; font-weight:500; text-decoration:none; white-space:nowrap;
+  }
+  @media (max-width:640px) { .nav-overlay-foot { flex-direction:column; align-items:stretch; } .nav-overlay-cta { justify-content:center; } }
+
+  body.menu-open { overflow:hidden; }
+
+  /* ============ FOOTER V2 ============ */
+  footer.site-footer-v2 { background:var(--black); color:var(--cream); padding:80px 0 40px; }
+  .footer-row1 { display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:16px; margin-bottom:48px; }
+  .footer-brand-v2 { font-family:'Anton',sans-serif; font-size:clamp(28px,4vw,40px); text-transform:uppercase; }
+  .footer-email-v2 { font-size:14px; color:var(--muted-dark); }
+  .footer-cols { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-bottom:48px; }
+  @media (max-width:700px) { .footer-cols { grid-template-columns:1fr; gap:32px; } }
+  .footer-col-label { font-family:'DM Mono',monospace; font-size:11px; letter-spacing:0.12em; color:var(--pink); margin-bottom:14px; }
+  .footer-col a { display:block; font-size:14px; color:var(--muted-dark); text-decoration:none; margin-bottom:8px; transition:color .2s; }
+  .footer-col a:hover { color:var(--cream); }
+  .footer-line-v2 { height:1px; background:var(--line-dark); margin-bottom:20px; }
+  .footer-bottom-row { display:flex; justify-content:space-between; font-size:12px; color:var(--muted-dark); flex-wrap:wrap; gap:8px; }
+
+  /* ============ PAGE HEADER ============ */
+  .page-header { padding:180px 0 100px; background:var(--black); color:var(--cream); }
+  @media (max-width:640px) { .page-header { padding:140px 0 64px; } }
+  .page-header .headline { margin-bottom:16px; line-height:0.78; }
+  .page-header-updated { font-family:'DM Mono',monospace; font-size:11px; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted-dark); margin-bottom:40px; }
+  .page-header-line { height:1px; background:var(--line-dark); }
+
+  /* ============ LEGAL PAGE ============ */
+  .legal-col { max-width:720px; }
+  .legal-block { margin-bottom:44px; }
+  .legal-title { font-family:'Anton',sans-serif; font-size:20px; text-transform:uppercase; letter-spacing:0.02em; color:var(--cream); margin-bottom:16px; }
+  .legal-text { font-size:15px; line-height:1.85; color:var(--muted-dark); }
+  .legal-text a { color:var(--cream); text-decoration:underline; }
+  .legal-list { list-style:none; margin:12px 0; }
+  .legal-list li { font-size:15px; line-height:1.7; color:var(--muted-dark); padding:6px 0; position:relative; padding-left:18px; }
+  .legal-list li::before { content:'—'; position:absolute; left:0; color:var(--pink); }
+  .legal-list li strong { color:var(--cream); font-weight:500; }
+
+  .highlight-box { border-left:2px solid var(--pink); background:var(--card-dark); padding:28px 32px; margin-bottom:56px; }
+  .highlight-box p { font-size:15px; line-height:1.8; color:var(--cream); }
+</style>
+</head>
+<body>
+
+<div id="scroll-track"><div id="scroll-bar"></div></div>
+
+<nav class="site-nav-v2" id="siteNav">
+  <div class="container">
+    <button class="burger-btn" id="burgerBtn" aria-label="Menü öffnen" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a href="index.html" class="nav-logo-v2">HER NEXT <span class="pink">LEVEL</span></a>
+  </div>
+</nav>
+
+<div class="nav-overlay" id="navOverlay">
+  <div class="nav-overlay-links">
+    <a href="index.html"><span class="nav-dot"></span><span class="nav-num">01</span>&nbsp;ATHENA</a>
+    <a href="ueber-uns.html"><span class="nav-dot"></span><span class="nav-num">02</span>&nbsp;ÜBER UNS</a>
+    <a href="framework.html"><span class="nav-dot"></span><span class="nav-num">03</span>&nbsp;FRAMEWORK</a>
+    <a href="mythologie.html"><span class="nav-dot"></span><span class="nav-num">04</span>&nbsp;MYTHOLOGIE</a>
+    <a href="app.html"><span class="nav-dot"></span><span class="nav-num">05</span>&nbsp;APP</a>
+  </div>
+  <div class="nav-overlay-foot">
+    <div class="nav-overlay-meta">
+      <a href="mailto:hello@hernextlvl.com">hello@hernextlvl.com</a>
+      <a href="impressum.html">Impressum</a>
+      <a href="datenschutz.html">Datenschutz</a>
+    </div>
+    <a href="index.html#bewerbung" class="nav-overlay-cta">Für ATHENA bewerben →</a>
+  </div>
+</div>
+
+<header class="page-header">
+  <div class="container">
+    <p class="eyebrow reveal">RECHTLICHES</p>
+    <h1 class="headline reveal">DATENSCHUTZ.</h1>
+    <p class="page-header-updated reveal">Zuletzt aktualisiert: Juli 2026</p>
+  </div>
+  <div class="page-header-line"></div>
+</header>
+
+<section class="section section-dark">
+  <div class="container">
+    <div class="legal-col">
+
+      <div class="highlight-box reveal">
+        <p>Kurz gesagt: Du gibst uns deine Daten, um dich für ATHENA zu bewerben. Wir nutzen sie, um über deine Bewerbung zu entscheiden und das Programm mit dir durchzuführen. Wir verkaufen sie nicht und geben sie nicht zu Werbezwecken weiter.</p>
+      </div>
+
+      <div class="legal-block reveal">
+        <p class="legal-title">1. Verantwortliche</p>
+        <p class="legal-text">Her Next Level GbR, Cosmina Schelle und Katharina Kock, Wielandstraße 49, 12065 Berlin. Wir sind die Verantwortlichen im Sinne der DSGVO. Kontakt: <a href="mailto:hello@hernextlvl.com">hello@hernextlvl.com</a></p>
+      </div>
+
+      <div class="legal-block reveal">
+        <p class="legal-title">2. Welche Daten wir erheben</p>
+        <p class="legal-text">Wenn du das Bewerbungsformular absendest:</p>
+        <ul class="legal-list">
+          <li>Vor- und Nachname</li>
+          <li>E-Mail-Adresse</li>
+          <li>Dein Alter</li>
+          <li>Gewählte Programmvariante (Core, 1:1 oder Beta)</li>
+          <li>Deine Video-Bewerbung (MP4, MOV oder WebM)</li>
+          <li>Deine Antworten auf die sechs Bewerbungsfragen</li>
+          <li>Deine Bestätigung, dass du vier Wochen priorisieren kannst</li>
+        </ul>
+        <p class="legal-text">Beim Besuch der Seite verarbeitet unser Hoster technisch notwendige Zugriffsdaten (IP-Adresse, Zeitpunkt, aufgerufene Seite, Browsertyp).</p>
+      </div>
+
+      <div class="legal-block reveal">
+        <p class="legal-title">3. Rechtsgrundlagen</p>
+        <ul class="legal-list">
+          <li><strong>Bewerbung und Programmdurchführung</strong> (Art. 6 Abs. 1 lit. b DSGVO): Wir verarbeiten deine Bewerbungsdaten, um über die Aufnahme zu entscheiden und, bei Zusage, ATHENA mit dir durchzuführen.</li>
+          <li><strong>Videomaterial</strong> (Art. 6 Abs. 1 lit. a DSGVO): Dein Bewerbungsvideo enthält biometrisch auswertbare Daten und Stimme. Die Verarbeitung erfolgt ausschließlich auf Grundlage deiner Einwilligung mit dem Absenden. Du kannst sie jederzeit widerrufen.</li>
+          <li><strong>Betrieb der Website</strong> (Art. 6 Abs. 1 lit. f DSGVO): berechtigtes Interesse an einem sicheren, funktionierenden Angebot.</li>
+        </ul>
+      </div>
+
+      <div class="legal-block reveal">
+        <p class="legal-title">4. Dienstleister</p>
+        <ul class="legal-list">
+          <li><strong>Netlify</strong> (Netlify Inc., USA) — Hosting und Verarbeitung der Formulareingaben inklusive Video-Upload. Übermittlung in die USA auf Grundlage der EU-Standardvertragsklauseln.</li>
+          <li><strong>Google Workspace</strong> (Google Ireland Ltd.) — E-Mail-Kommunikation über hello@hernextlvl.com.</li>
+          <li><strong>Calendly</strong> (Calendly LLC, USA) — Terminvereinbarung für Vorgespräche, sofern du einen Termin buchst.</li>
+        </ul>
+        <p class="legal-text">Alle Anbieter sind vertraglich zur DSGVO-konformen Verarbeitung verpflichtet.</p>
+      </div>
+
+      <div class="legal-block reveal">
+        <p class="legal-title">5. Speicherdauer</p>
+        <ul class="legal-list">
+          <li><strong>Abgelehnte Bewerbungen</strong> inklusive Video: Löschung spätestens 6 Monate nach der Entscheidung.</li>
+          <li><strong>Angenommene Bewerbungen</strong>: Aufbewahrung für die Dauer der Kohorte und bis zu 12 Monate danach.</li>
+          <li><strong>Steuerlich relevante Unterlagen</strong>: gesetzliche Aufbewahrungsfristen bleiben unberührt.</li>
+        </ul>
+        <p class="legal-text">Wir treffen keine automatisierten Entscheidungen und betreiben kein Profiling. Jede Bewerbung wird von uns persönlich gesichtet.</p>
+      </div>
+
+      <div class="legal-block reveal">
+        <p class="legal-title">6. Deine Rechte</p>
+        <p class="legal-text">Auskunft (Art. 15), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18), Datenübertragbarkeit (Art. 20), Widerspruch (Art. 21) sowie Widerruf erteilter Einwilligungen mit Wirkung für die Zukunft.</p>
+        <p class="legal-text" style="margin-top:12px;">Melde dich dafür an <a href="mailto:hello@hernextlvl.com">hello@hernextlvl.com</a>. Wir antworten innerhalb eines Monats. Außerdem steht dir ein Beschwerderecht bei der für dich zuständigen Datenschutzaufsichtsbehörde zu.</p>
+      </div>
+
+      <div class="legal-block reveal">
+        <p class="legal-title">7. Cookies und Analyse</p>
+        <p class="legal-text">Diese Website setzt keine Tracking-Cookies und nutzt kein Google Analytics oder vergleichbare Werkzeuge. Es werden nur technisch notwendige Daten verarbeitet.</p>
+      </div>
+
+      <div class="legal-block reveal">
+        <p class="legal-title">8. Änderungen</p>
+        <p class="legal-text">Bei wesentlichen Änderungen informieren wir aktive Teilnehmerinnen per E-Mail. Das Datum oben auf der Seite zeigt immer die aktuelle Fassung.</p>
+      </div>
+
+      <div class="legal-block reveal">
+        <p class="legal-title">9. Kontakt</p>
+        <p class="legal-text">Fragen? <a href="mailto:hello@hernextlvl.com">hello@hernextlvl.com</a></p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer-v2">
+  <div class="container">
+    <div class="footer-row1">
+      <p class="footer-brand-v2">Her Next Level</p>
+      <p class="footer-email-v2">hello@hernextlvl.com</p>
+    </div>
+    <div class="footer-cols">
+      <div>
+        <p class="footer-col-label">Programm</p>
+        <a href="index.html">ATHENA</a>
+        <a href="framework.html">Framework</a>
+        <a href="app.html">App</a>
+      </div>
+      <div>
+        <p class="footer-col-label">Her Next Level</p>
+        <a href="ueber-uns.html">Über uns</a>
+        <a href="mythologie.html">Mythologie</a>
+      </div>
+      <div>
+        <p class="footer-col-label">Rechtliches</p>
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+      </div>
+    </div>
+    <div class="footer-line-v2"></div>
+    <div class="footer-bottom-row">
+      <span>© 2026 Her Next Level</span>
+      <span>Made in Germany</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    const nav = document.getElementById('siteNav');
+    const burgerBtn = document.getElementById('burgerBtn');
+    const overlay = document.getElementById('navOverlay');
+
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    function openMenu() {
+      overlay.classList.add('open');
+      burgerBtn.classList.add('open');
+      burgerBtn.setAttribute('aria-expanded', 'true');
+      document.body.classList.add('menu-open');
+    }
+    function closeMenu() {
+      overlay.classList.remove('open');
+      burgerBtn.classList.remove('open');
+      burgerBtn.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('menu-open');
+    }
+    burgerBtn.addEventListener('click', () => {
+      overlay.classList.contains('open') ? closeMenu() : openMenu();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && overlay.classList.contains('open')) closeMenu();
+    });
+    overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+
+    const links = overlay.querySelectorAll('.nav-overlay-links a');
+    links.forEach((a, i) => { a.style.transitionDelay = (i * 60) + 'ms'; });
+  })();
+
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  const scrollBar = document.getElementById('scroll-bar');
+  function updateScrollBar() {
+    const h = document.documentElement;
+    const scrolled = h.scrollTop;
+    const total = h.scrollHeight - h.clientHeight;
+    scrollBar.style.height = (total > 0 ? (scrolled / total) * 100 : 0) + '%';
+  }
+  window.addEventListener('scroll', updateScrollBar, { passive: true });
+  updateScrollBar();
+</script>
+</body>
+</html>

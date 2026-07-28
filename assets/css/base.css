@@ -1,0 +1,165 @@
+@font-face { font-family:'Bebas Neue'; src: url('../fonts/BebasNeue.woff2') format('woff2'); font-weight:400; font-display: swap; }
+@font-face { font-family:'DM Sans'; src: url('../fonts/DMSans-Light.woff2') format('woff2'); font-weight:300; font-display: swap; }
+@font-face { font-family:'DM Sans'; src: url('../fonts/DMSans-Regular.woff2') format('woff2'); font-weight:400; font-display: swap; }
+@font-face { font-family:'DM Sans'; src: url('../fonts/DMSans-Medium.woff2') format('woff2'); font-weight:500; font-display: swap; }
+@font-face { font-family:'DM Mono'; src: url('../fonts/DMMono-Regular.woff2') format('woff2'); font-weight:400; font-display: swap; }
+@font-face { font-family:'DM Mono'; src: url('../fonts/DMMono-Medium.woff2') format('woff2'); font-weight:500; font-display: swap; }
+
+:root {
+  --pink: #FF0090;
+  --black: #0A0A0A;
+  --wine: #4A0E24;   /* the "wine-dark sea" — antique accent, not a primary brand color */
+  --gold: #C9A24B;   /* aged bronze/gold leaf — antique statue accent */
+  --white: #F5F5F0;
+  --grey: #888;
+  --grey-dark: #1A1A1A;
+  --grey-mid: #2A2A2A;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior: smooth; background: var(--black); overflow-x: hidden; }
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family:'DM Sans', sans-serif;
+  font-weight: 300;
+  position: relative;
+}
+a { color: inherit; }
+img { max-width: 100%; display: block; }
+
+/* ── AMBIENT BACKGROUND ── */
+/* Fixed, behind all content. Slow-drifting bronze/wine glows plus a cursor-tracked
+   pink spotlight — the "dynamic background" the site now runs on instead of flat black. */
+.bg-ambient {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.bg-ambient .blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  mix-blend-mode: screen;
+  will-change: transform;
+}
+.bg-ambient .blob--pink {
+  width: 46vw; height: 46vw; top: -14%; left: -10%;
+  background: radial-gradient(circle, var(--pink), transparent 70%);
+  opacity: 0.28;
+  animation: driftA 26s ease-in-out infinite;
+}
+.bg-ambient .blob--wine {
+  width: 54vw; height: 54vw; bottom: -18%; right: -12%;
+  background: radial-gradient(circle, var(--wine), transparent 70%);
+  opacity: 0.55;
+  animation: driftB 32s ease-in-out infinite;
+}
+.bg-ambient .blob--gold {
+  width: 28vw; height: 28vw; top: 42%; left: 58%;
+  background: radial-gradient(circle, var(--gold), transparent 70%);
+  opacity: 0.16;
+  animation: driftC 40s ease-in-out infinite;
+}
+.bg-ambient .cursor-glow {
+  position: absolute;
+  width: 640px; height: 640px;
+  left: var(--mx, 50vw); top: var(--my, 40vh);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,0,144,0.16), transparent 70%);
+  mix-blend-mode: screen;
+}
+@keyframes driftA { 0%,100% { transform: translate(0,0); } 50% { transform: translate(6vw, 8vh); } }
+@keyframes driftB { 0%,100% { transform: translate(0,0); } 50% { transform: translate(-7vw, -6vh); } }
+@keyframes driftC { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-4vw, 5vh) scale(1.15); } }
+@media (prefers-reduced-motion: reduce) {
+  .bg-ambient .blob { animation: none; }
+}
+
+/* Grid overlay, sits above the ambient glow, below content */
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+main, header, footer, section, nav, .page { position: relative; z-index: 1; }
+
+/* ── SHARED UTILITIES ── */
+.reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+.btn-primary {
+  display: inline-block; background: var(--pink); color: var(--black);
+  font-family: 'DM Sans', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 3px; text-transform: uppercase;
+  text-decoration: none; padding: 16px 34px; transition: opacity 0.2s, transform 0.2s; border: none; cursor: pointer;
+}
+.btn-primary:hover { opacity: 0.85; transform: translateY(-2px); }
+
+.btn-ghost {
+  display: inline-block; border: 1px solid var(--grey-mid); color: var(--grey);
+  font-family: 'DM Sans', sans-serif; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; text-decoration: none; padding: 16px 34px;
+  transition: border-color 0.2s, color 0.2s; background: transparent; cursor: pointer;
+}
+.btn-ghost:hover { border-color: var(--white); color: var(--white); }
+
+.section-label {
+  font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--pink); margin-bottom: 20px;
+}
+
+/* ── SITE NAV (inner pages) ── */
+.site-nav {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 22px 40px;
+  background: rgba(10,10,10,0.7);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s, background 0.3s;
+}
+.site-nav.scrolled { border-color: var(--grey-mid); background: rgba(10,10,10,0.9); }
+.site-nav .nav-logo {
+  font-family: 'Bebas Neue', sans-serif; font-size: 22px; letter-spacing: 3px; color: var(--white); text-decoration: none;
+}
+.site-nav .nav-logo span { color: var(--pink); }
+.site-nav .nav-links { display: flex; align-items: center; gap: 24px; }
+.site-nav .nav-links a {
+  font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--grey); text-decoration: none; transition: color 0.2s; white-space: nowrap;
+}
+.site-nav .nav-links a:hover { color: var(--white); }
+.site-nav .nav-links a.nav-cta {
+  color: var(--black); background: var(--pink); padding: 10px 20px; transition: opacity 0.2s;
+}
+.site-nav .nav-links a.nav-cta:hover { opacity: 0.85; color: var(--black); }
+
+@media (max-width: 640px) {
+  .site-nav { padding: 18px 20px; }
+  .site-nav .nav-links { gap: 14px; }
+}
+
+/* ── FOOTER ── */
+footer.site-footer {
+  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;
+  padding: 32px 40px; border-top: 1px solid var(--grey-mid);
+}
+footer.site-footer .footer-logo {
+  font-family: 'Bebas Neue', sans-serif; font-size: 16px; letter-spacing: 3px; color: var(--grey); text-decoration: none;
+}
+footer.site-footer .footer-logo span { color: var(--pink); }
+footer.site-footer .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+footer.site-footer .footer-links a {
+  font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--grey); text-decoration: none; transition: color .2s;
+}
+footer.site-footer .footer-links a:hover { color: var(--white); }
+footer.site-footer .footer-copy { font-size: 11px; color: var(--grey); }

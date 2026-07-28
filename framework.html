@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Framework — Her Next Level</title>
+<meta name="description" content="Values, Principles, Standards. Drei Ebenen, die bestimmen, was du tust, wenn niemand zuschaut.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink:      #FF0090;
+    --black:     #0A0A0A;
+    --cream:     #F5F5F0;
+    --card-dark: #121212;
+    --line-dark: rgba(245,245,240,0.14);
+    --line-light:rgba(10,10,10,0.12);
+    --muted-dark: rgba(245,245,240,0.62);
+    --muted-light:rgba(10,10,10,0.62);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; overflow-x:hidden; }
+  body { background:var(--black); color:var(--cream); font-family:'DM Sans',sans-serif; font-weight:400; }
+  img { max-width:100%; display:block; }
+  a { color:inherit; }
+  button, input, textarea { font-family:inherit; }
+
+  .container { max-width:1240px; margin:0 auto; padding:0 40px; }
+  @media (max-width:640px) { .container { padding:0 24px; } }
+
+  h1,h2,h3,.headline {
+    font-family:'Anton',sans-serif; text-transform:uppercase;
+    line-height:0.95; letter-spacing:-0.01em; font-weight:400;
+  }
+  .headline { font-size:clamp(48px,6.5vw,104px); }
+  .eyebrow {
+    font-family:'DM Mono',monospace; font-size:11px; letter-spacing:0.22em;
+    text-transform:uppercase; color:var(--pink);
+  }
+
+  section.section { padding:120px 0; position:relative; }
+  @media (max-width:640px) { section.section { padding:72px 0; } }
+  .section-dark { background:var(--black); color:var(--cream); }
+  .section-light { background:var(--cream); color:var(--black); }
+
+  .reveal { opacity:0; transform:translateY(24px); transition:opacity .5s ease, transform .5s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+
+  #scroll-track { position:fixed; top:0; right:0; width:4px; height:100%; z-index:200; pointer-events:none; }
+  #scroll-bar { width:100%; height:0%; background:var(--pink); }
+
+  /* ============ NAV V2 (burger) ============ */
+  .site-nav-v2 { position:fixed; top:0; left:0; right:0; z-index:1000; padding:22px 0; transition:background .3s, border-color .3s; border-bottom:1px solid transparent; }
+  .site-nav-v2 .container { display:flex; align-items:center; justify-content:space-between; }
+  .site-nav-v2.scrolled { background:rgba(10,10,10,0.92); backdrop-filter:blur(12px); border-color:var(--line-dark); }
+  .nav-logo-v2 { font-family:'Anton',sans-serif; font-size:20px; letter-spacing:0.06em; text-transform:uppercase; color:var(--cream); text-decoration:none; }
+  .nav-logo-v2 .pink { color:var(--pink); }
+
+  .burger-btn { width:44px; height:44px; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:6px; background:none; border:none; cursor:pointer; position:relative; z-index:1002; }
+  .burger-btn span { width:24px; height:2px; background:var(--cream); display:block; transition:transform .3s ease, opacity .3s ease; }
+  .burger-btn.open span:nth-child(1) { transform:translateY(8px) rotate(45deg); }
+  .burger-btn.open span:nth-child(2) { opacity:0; }
+  .burger-btn.open span:nth-child(3) { transform:translateY(-8px) rotate(-45deg); }
+
+  .nav-overlay {
+    position:fixed; inset:0; z-index:1001; background:var(--black);
+    transform:translateX(100%); transition:transform .4s cubic-bezier(.7,0,.2,1);
+    display:flex; flex-direction:column; justify-content:space-between;
+    padding:120px 40px 40px; overflow-y:auto;
+  }
+  .nav-overlay.open { transform:translateX(0); }
+  @media (max-width:640px) { .nav-overlay { padding:110px 24px 32px; } }
+
+  .nav-overlay-links { display:flex; flex-direction:column; gap:6px; }
+  .nav-overlay-links a {
+    font-family:'Anton',sans-serif; font-size:clamp(36px,6vw,68px); text-transform:uppercase;
+    color:var(--cream); text-decoration:none; position:relative; display:inline-flex; align-items:baseline; gap:16px;
+    width:fit-content; opacity:0; transform:translateY(20px); transition:opacity .3s ease, transform .3s ease, color .2s ease;
+  }
+  .nav-overlay.open .nav-overlay-links a { opacity:1; transform:translateY(0); }
+  .nav-overlay-links a .nav-num { font-family:'DM Mono',monospace; font-size:11px; color:var(--pink); }
+  .nav-overlay-links a::after {
+    content:''; position:absolute; left:0; bottom:6px; width:0; height:2px; background:var(--pink); transition:width .25s ease;
+  }
+  .nav-overlay-links a:hover::after { width:100%; }
+  .nav-overlay-links a:hover { color:var(--pink); }
+  .nav-overlay-links a.active { color:var(--pink); }
+  .nav-dot { display:none; width:8px; height:8px; border-radius:50%; background:var(--pink); }
+  .nav-overlay-links a.active .nav-dot { display:inline-block; }
+  @media (max-width:640px) { .nav-overlay-links a { font-size:clamp(32px,9vw,48px); } }
+
+  .nav-overlay-foot { display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:24px; }
+  .nav-overlay-meta { font-family:'DM Mono',monospace; font-size:11px; color:var(--muted-dark); display:flex; gap:16px; flex-wrap:wrap; }
+  .nav-overlay-meta a { color:var(--muted-dark); text-decoration:none; }
+  .nav-overlay-meta a:hover { color:var(--cream); }
+  .nav-overlay-cta {
+    display:inline-flex; align-items:center; gap:8px; background:var(--pink); color:var(--black);
+    border-radius:999px; padding:14px 26px; font-size:14px; font-weight:500; text-decoration:none; white-space:nowrap;
+  }
+  @media (max-width:640px) { .nav-overlay-foot { flex-direction:column; align-items:stretch; } .nav-overlay-cta { justify-content:center; } }
+
+  body.menu-open { overflow:hidden; }
+
+  /* ============ FOOTER V2 ============ */
+  footer.site-footer-v2 { background:var(--black); color:var(--cream); padding:80px 0 40px; }
+  .footer-row1 { display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:16px; margin-bottom:48px; }
+  .footer-brand-v2 { font-family:'Anton',sans-serif; font-size:clamp(28px,4vw,40px); text-transform:uppercase; }
+  .footer-email-v2 { font-size:14px; color:var(--muted-dark); }
+  .footer-cols { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-bottom:48px; }
+  @media (max-width:700px) { .footer-cols { grid-template-columns:1fr; gap:32px; } }
+  .footer-col-label { font-family:'DM Mono',monospace; font-size:11px; letter-spacing:0.12em; color:var(--pink); margin-bottom:14px; }
+  .footer-col a { display:block; font-size:14px; color:var(--muted-dark); text-decoration:none; margin-bottom:8px; transition:color .2s; }
+  .footer-col a:hover { color:var(--cream); }
+  .footer-line-v2 { height:1px; background:var(--line-dark); margin-bottom:20px; }
+  .footer-bottom-row { display:flex; justify-content:space-between; font-size:12px; color:var(--muted-dark); flex-wrap:wrap; gap:8px; }
+
+  /* ============ PAGE HEADER ============ */
+  .page-header { padding:180px 0 100px; background:var(--black); color:var(--cream); }
+  @media (max-width:640px) { .page-header { padding:140px 0 64px; } }
+  .page-header .headline { margin-bottom:24px; line-height:0.78; }
+  .page-header .headline .pink { color:var(--pink); }
+  .page-header-sub { font-size:15px; line-height:1.8; color:var(--muted-dark); max-width:560px; margin-bottom:40px; }
+  .page-header-line { height:1px; background:var(--line-dark); }
+
+  /* ============ PAGE-SPECIFIC ============ */
+  .fw-grid { display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:start; }
+  @media (max-width:900px) { .fw-grid { grid-template-columns:1fr; gap:32px; } }
+  .fw-headline { font-size:clamp(30px,4vw,48px); color:var(--black); }
+  .fw-copy { font-size:16px; line-height:1.85; color:var(--muted-light); }
+  .fw-copy p + p { margin-top:16px; }
+
+  .vps-card { position:relative; border-top:1px solid var(--line-dark); padding:56px 0; overflow:hidden; }
+  .vps-card:first-child { border-top:none; }
+  .vps-num { position:absolute; top:50%; right:0; transform:translateY(-50%); font-family:'Anton',sans-serif; font-size:clamp(120px,18vw,260px); color:var(--pink); opacity:0.08; line-height:1; pointer-events:none; }
+  .vps-content { position:relative; z-index:1; max-width:640px; }
+  .vps-name { font-family:'Anton',sans-serif; font-size:clamp(32px,5vw,52px); color:var(--pink); text-transform:uppercase; margin-bottom:10px; }
+  .vps-question { font-family:'Anton',sans-serif; font-size:20px; text-transform:uppercase; color:var(--cream); margin-bottom:16px; }
+  .vps-explain { font-size:15px; line-height:1.8; color:var(--muted-dark); }
+
+  .vps-anchor { text-align:center; padding:60px 0; }
+  .vps-anchor p { font-family:'Anton',sans-serif; font-size:clamp(28px,5vw,52px); color:var(--pink); text-transform:uppercase; line-height:1.05; }
+
+  .apply-row { display:grid; grid-template-columns:200px 1fr; gap:24px; padding:24px 0; border-bottom:1px solid var(--line-light); align-items:baseline; }
+  @media (max-width:640px) { .apply-row { grid-template-columns:1fr; gap:8px; } }
+  .apply-week { font-family:'DM Mono',monospace; font-size:13px; letter-spacing:0.1em; color:var(--black); font-weight:500; }
+  .apply-text { font-size:15px; line-height:1.7; color:var(--muted-light); }
+
+  .link-box { display:flex; justify-content:space-between; align-items:center; gap:24px; border:1px solid var(--line-light); border-radius:20px; padding:32px 36px; flex-wrap:wrap; }
+  .link-box-title { font-family:'Anton',sans-serif; font-size:clamp(22px,3vw,32px); text-transform:uppercase; color:var(--black); }
+  .link-box a.link-box-cta { font-family:'DM Mono',monospace; font-size:13px; letter-spacing:0.08em; color:var(--pink); text-decoration:none; border-bottom:1px solid var(--pink); white-space:nowrap; }
+</style>
+</head>
+<body>
+
+<div id="scroll-track"><div id="scroll-bar"></div></div>
+
+<nav class="site-nav-v2" id="siteNav">
+  <div class="container">
+    <button class="burger-btn" id="burgerBtn" aria-label="Menü öffnen" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <a href="index.html" class="nav-logo-v2">HER NEXT <span class="pink">LEVEL</span></a>
+  </div>
+</nav>
+
+<div class="nav-overlay" id="navOverlay">
+  <div class="nav-overlay-links">
+    <a href="index.html"><span class="nav-dot"></span><span class="nav-num">01</span>&nbsp;ATHENA</a>
+    <a href="ueber-uns.html"><span class="nav-dot"></span><span class="nav-num">02</span>&nbsp;ÜBER UNS</a>
+    <a href="framework.html" class="active"><span class="nav-dot"></span><span class="nav-num">03</span>&nbsp;FRAMEWORK</a>
+    <a href="mythologie.html"><span class="nav-dot"></span><span class="nav-num">04</span>&nbsp;MYTHOLOGIE</a>
+    <a href="app.html"><span class="nav-dot"></span><span class="nav-num">05</span>&nbsp;APP</a>
+  </div>
+  <div class="nav-overlay-foot">
+    <div class="nav-overlay-meta">
+      <a href="mailto:hello@hernextlvl.com">hello@hernextlvl.com</a>
+      <a href="impressum.html">Impressum</a>
+      <a href="datenschutz.html">Datenschutz</a>
+    </div>
+    <a href="index.html#bewerbung" class="nav-overlay-cta">Für ATHENA bewerben →</a>
+  </div>
+</div>
+
+<header class="page-header">
+  <div class="container">
+    <p class="eyebrow reveal">03 / FRAMEWORK</p>
+    <h1 class="headline reveal">DEIN VPS<br><span class="pink">IST DEIN KERN.</span></h1>
+    <p class="page-header-sub reveal">Values, Principles, Standards. Drei Ebenen, die bestimmen, was du tust, wenn niemand zuschaut.</p>
+  </div>
+  <div class="page-header-line"></div>
+</header>
+
+<!-- Block 1 — Warum überhaupt ein Framework -->
+<section class="section section-light">
+  <div class="container">
+    <div class="fw-grid">
+      <h2 class="fw-headline reveal">DISZIPLIN SCHEITERT NICHT AM WILLEN. SIE SCHEITERT AN UNKLARHEIT.</h2>
+      <div class="fw-copy reveal">
+        <p>Die meisten Frauen, die zu uns kommen, haben kein Motivationsproblem. Sie haben ein Entscheidungsproblem. Jede Entscheidung kostet Energie, weil nichts vorher festgelegt ist.</p>
+        <p>Das VPS Framework legt vorher fest. Damit du im Moment nicht mehr verhandelst.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Block 2 — Die drei Ebenen -->
+<section class="section section-dark">
+  <div class="container">
+    <p class="eyebrow reveal" style="margin-bottom:8px;">Die drei Ebenen</p>
+
+    <div class="vps-card reveal">
+      <div class="vps-num">01</div>
+      <div class="vps-content">
+        <p class="vps-name">Values</p>
+        <p class="vps-question">Was zählt für dich?</p>
+        <p class="vps-explain">Werte sind die Richtung. Nicht das, was gut klingt — das, wofür du tatsächlich Zeit ausgibst. Wer seine Werte nicht benennen kann, übernimmt fremde.</p>
+      </div>
+    </div>
+    <div class="vps-card reveal">
+      <div class="vps-num">02</div>
+      <div class="vps-content">
+        <p class="vps-name">Principles</p>
+        <p class="vps-question">Wie entscheidest du?</p>
+        <p class="vps-explain">Prinzipien sind vorab getroffene Entscheidungen. Sie ersparen dir die Diskussion mit dir selbst, wenn es unbequem wird.</p>
+      </div>
+    </div>
+    <div class="vps-card reveal">
+      <div class="vps-num">03</div>
+      <div class="vps-content">
+        <p class="vps-name">Standards</p>
+        <p class="vps-question">Was akzeptierst du?</p>
+        <p class="vps-explain">Standards sind die Untergrenze. Nicht dein Ziel, sondern das, worunter du nicht gehst — auch an schlechten Tagen.</p>
+      </div>
+    </div>
+
+    <div class="vps-anchor reveal">
+      <p>Your VPS is your core.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Block 3 — Wie das in ATHENA angewendet wird -->
+<section class="section section-light">
+  <div class="container">
+    <p class="eyebrow reveal">Wie das in ATHENA angewendet wird</p>
+    <div class="reveal" style="margin-top:32px;">
+      <div class="apply-row">
+        <div class="apply-week">W01 VALIDATE</div>
+        <div class="apply-text">Dein VPS entscheidet, welches Problem du überhaupt verfolgst.</div>
+      </div>
+      <div class="apply-row">
+        <div class="apply-week">W02 PILOT</div>
+        <div class="apply-text">Deine Standards bestimmen, was du als „fertig genug" durchgehen lässt.</div>
+      </div>
+      <div class="apply-row">
+        <div class="apply-week">W03 LAUNCH</div>
+        <div class="apply-text">Deine Prinzipien tragen dich durch den Moment, in dem du sichtbar wirst.</div>
+      </div>
+      <div class="apply-row">
+        <div class="apply-week">W04 TRACTION</div>
+        <div class="apply-text">Deine Werte entscheiden, was bleibt und was du streichst.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Abschluss -->
+<section class="section section-light">
+  <div class="container">
+    <div class="link-box reveal">
+      <p class="link-box-title">Woher der Name kommt</p>
+      <a href="mythologie.html" class="link-box-cta">Woher der Name kommt →</a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer-v2">
+  <div class="container">
+    <div class="footer-row1">
+      <p class="footer-brand-v2">Her Next Level</p>
+      <p class="footer-email-v2">hello@hernextlvl.com</p>
+    </div>
+    <div class="footer-cols">
+      <div>
+        <p class="footer-col-label">Programm</p>
+        <a href="index.html">ATHENA</a>
+        <a href="framework.html">Framework</a>
+        <a href="app.html">App</a>
+      </div>
+      <div>
+        <p class="footer-col-label">Her Next Level</p>
+        <a href="ueber-uns.html">Über uns</a>
+        <a href="mythologie.html">Mythologie</a>
+      </div>
+      <div>
+        <p class="footer-col-label">Rechtliches</p>
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+      </div>
+    </div>
+    <div class="footer-line-v2"></div>
+    <div class="footer-bottom-row">
+      <span>© 2026 Her Next Level</span>
+      <span>Made in Germany</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    const nav = document.getElementById('siteNav');
+    const burgerBtn = document.getElementById('burgerBtn');
+    const overlay = document.getElementById('navOverlay');
+
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    function openMenu() {
+      overlay.classList.add('open');
+      burgerBtn.classList.add('open');
+      burgerBtn.setAttribute('aria-expanded', 'true');
+      document.body.classList.add('menu-open');
+    }
+    function closeMenu() {
+      overlay.classList.remove('open');
+      burgerBtn.classList.remove('open');
+      burgerBtn.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('menu-open');
+    }
+    burgerBtn.addEventListener('click', () => {
+      overlay.classList.contains('open') ? closeMenu() : openMenu();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && overlay.classList.contains('open')) closeMenu();
+    });
+    overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+
+    const links = overlay.querySelectorAll('.nav-overlay-links a');
+    links.forEach((a, i) => { a.style.transitionDelay = (i * 60) + 'ms'; });
+  })();
+
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  const scrollBar = document.getElementById('scroll-bar');
+  function updateScrollBar() {
+    const h = document.documentElement;
+    const scrolled = h.scrollTop;
+    const total = h.scrollHeight - h.clientHeight;
+    scrollBar.style.height = (total > 0 ? (scrolled / total) * 100 : 0) + '%';
+  }
+  window.addEventListener('scroll', updateScrollBar, { passive: true });
+  updateScrollBar();
+</script>
+</body>
+</html>
