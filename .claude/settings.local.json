@@ -8,7 +8,13 @@
       "Bash(shasum athena_placeholder.png klotho_bw_faded.png lachesis_bw_faded.png atropos_bw_faded.png)",
       "Bash(grep -oE '#[0-9A-Fa-f]{3,6}' /Users/katharinakock/Desktop/HNL-Website/index.html)",
       "Read(//Users/katharinakock/Library/Application Support/Claude/local-agent-mode-sessions/d54b8825-d840-4465-8af7-2b3edc9e71e6/cb830cf9-4181-4a50-aaad-7f1998924aed/local_27d78c92-b147-47be-b35d-1330f3e6f23e/outputs/**)",
-      "Read(//Users/katharinakock/Library/Application Support/Claude/local-agent-mode-sessions/d54b8825-d840-4465-8af7-2b3edc9e71e6/cb830cf9-4181-4a50-aaad-7f1998924aed/local_27d78c92-b147-47be-b35d-1330f3e6f23e/uploads/**)"
+      "Read(//Users/katharinakock/Library/Application Support/Claude/local-agent-mode-sessions/d54b8825-d840-4465-8af7-2b3edc9e71e6/cb830cf9-4181-4a50-aaad-7f1998924aed/local_27d78c92-b147-47be-b35d-1330f3e6f23e/uploads/**)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(git fetch *)",
+      "Bash(git merge *)",
+      "Bash(git add *)",
+      "Bash(git commit *)"
     ]
   }
 }
