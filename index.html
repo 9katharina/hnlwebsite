@@ -238,13 +238,14 @@
   .upload-checklist { list-style:none; margin-bottom:20px; }
   .upload-checklist li { font-size:13.5px; line-height:1.7; color:var(--cream); padding-left:18px; position:relative; }
   .upload-checklist li::before { content:'—'; position:absolute; left:0; color:var(--pink); }
-  .upload-row { display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
-  .upload-btn {
-    border:none; border-radius:999px; background:var(--pink); color:var(--black);
-    padding:13px 26px; font-size:13.5px; font-weight:500; cursor:pointer; transition:opacity .2s;
+  .video-link-input {
+    width:100%; border:none; border-bottom:1px solid var(--line-dark); background:transparent;
+    font-family:'DM Sans',sans-serif; font-size:15px; color:var(--cream); outline:none; padding:10px 0;
   }
-  .upload-btn:hover { opacity:0.85; }
-  .upload-status { font-family:'DM Mono',monospace; font-size:12px; color:var(--muted-dark); }
+  .video-link-input::placeholder { color:var(--muted-dark); }
+  .upload-hint { font-size:12.5px; color:var(--muted-dark); line-height:1.6; margin-top:10px; }
+
+  .age-error { font-size:13px; color:var(--pink); margin-top:-8px; margin-bottom:20px; }
 
   .q-card {
     background:var(--cream); border:1px solid var(--line-light); border-radius:24px;
@@ -585,7 +586,7 @@
 
     <p class="plan-indicator reveal" id="planIndicator" hidden>Gewählt: <strong id="planIndicatorName"></strong></p>
 
-    <form id="athena-form" name="athena-bewerbung" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data" method="POST" class="reveal">
+    <form id="athena-form" name="athena-bewerbung" data-netlify="true" netlify-honeypot="bot-field" method="POST" class="reveal">
       <input type="hidden" name="form-name" value="athena-bewerbung">
       <p hidden><label>Nicht ausfüllen: <input name="bot-field"></label></p>
       <input type="hidden" name="plan" id="planField" value="">
@@ -601,23 +602,22 @@
         </div>
         <div class="field-card">
           <label class="field-label" for="age">Alter</label>
-          <input type="number" id="age" name="age" placeholder="Dein Alter" min="16" max="99" required>
+          <input type="number" id="age" name="age" placeholder="Dein Alter" min="18" max="99" required>
         </div>
       </div>
+      <p class="age-error" id="ageError" hidden>Du musst mindestens 18 Jahre alt sein, um dich für ATHENA zu bewerben.</p>
 
       <div class="upload-card">
         <p class="upload-label">⇧ Video-Bewerbung</p>
-        <p class="upload-text">MP4, MOV oder WebM. Drei bis fünf Minuten. In deinem Video sagst du:</p>
+        <p class="upload-text">Drei bis fünf Minuten. In deinem Video sagst du:</p>
         <ul class="upload-checklist">
           <li>Wer du bist</li>
           <li>Was du erreichen möchtest</li>
           <li>Warum du es ohne das Programm nicht schaffst</li>
         </ul>
-        <div class="upload-row">
-          <input type="file" id="videoUpload" name="video" accept="video/mp4,video/quicktime,video/webm" hidden required>
-          <button type="button" class="upload-btn" id="uploadBtn">Datei auswählen</button>
-          <span class="upload-status" id="uploadStatus">Keine Datei ausgewählt</span>
-        </div>
+        <label class="field-label" for="videoLink" style="margin-top:16px; display:block;">Link zu deinem Video</label>
+        <input type="url" id="videoLink" name="video_link" class="video-link-input" placeholder="z. B. Google Drive, WeTransfer oder Dropbox-Link" required>
+        <p class="upload-hint">Lade dein Video bei Google Drive, WeTransfer oder Dropbox hoch, stell den Link auf „jeder mit Link kann zugreifen" und füg ihn hier ein. Direkter Upload klappt wegen der Dateigröße hier leider nicht zuverlässig.</p>
       </div>
 
       <div class="q-card">
@@ -816,14 +816,22 @@
     });
   });
 
-  // File upload
-  const videoUpload = document.getElementById('videoUpload');
-  const uploadBtn = document.getElementById('uploadBtn');
-  const uploadStatus = document.getElementById('uploadStatus');
-  uploadBtn.addEventListener('click', () => videoUpload.click());
-  videoUpload.addEventListener('change', () => {
-    uploadStatus.textContent = videoUpload.files.length ? videoUpload.files[0].name : 'Keine Datei ausgewählt';
+  // Age gate — must be 18+, block submission otherwise
+  const athenaForm = document.getElementById('athena-form');
+  const ageInput = document.getElementById('age');
+  const ageError = document.getElementById('ageError');
+  athenaForm.addEventListener('submit', (e) => {
+    const age = parseInt(ageInput.value, 10);
+    if (!age || age < 18) {
+      e.preventDefault();
+      ageError.hidden = false;
+      ageInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      ageInput.focus();
+    } else {
+      ageError.hidden = true;
+    }
   });
+  ageInput.addEventListener('input', () => { ageError.hidden = true; });
 
   // FAQ accordion — only one open at a time
   document.querySelectorAll('.faq-item').forEach(item => {
