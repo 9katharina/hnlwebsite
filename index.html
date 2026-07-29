@@ -90,7 +90,7 @@
   /* ============ 01 / DAS PROBLEM ============ */
   .problem-grid { display:grid; grid-template-columns:60fr 40fr; gap:56px; align-items:end; }
   @media (max-width:900px) { .problem-grid { grid-template-columns:1fr; gap:32px; } }
-  .problem-headline { font-size:clamp(40px,5.2vw,72px); line-height:0.82; }
+  .problem-headline { font-size:clamp(40px,5.2vw,72px); line-height:1.05; }
   .problem-headline .black-part { color:var(--black); }
   .problem-headline .pink-part { color:var(--pink); }
   .problem-copy { font-size:16px; line-height:1.8; color:var(--muted-light); }
@@ -163,16 +163,14 @@
   .filter-card.dark .filter-mark { color:var(--pink); }
   .filter-card.light .filter-mark { color:var(--black); }
 
-  /* ============ 05 / PREISE ============ */
+  /* ============ 05 / BETA ============ */
   .prices-top { display:flex; justify-content:space-between; align-items:flex-end; gap:24px; margin-bottom:56px; }
   @media (max-width:700px) { .prices-top { flex-direction:column; align-items:flex-start; gap:12px; } }
-  .prices-note { font-family:'DM Mono',monospace; font-size:11px; letter-spacing:0.1em; color:var(--muted-dark); white-space:nowrap; }
 
   .price-cards { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
   @media (max-width:960px) { .price-cards { grid-template-columns:1fr; } }
+  .price-cards--single { grid-template-columns:1fr; max-width:480px; margin:0 auto; }
   .price-card { border-radius:24px; padding:36px; position:relative; display:flex; flex-direction:column; }
-  .price-card.core { background:var(--card-dark); border:1px solid var(--line-dark); color:var(--cream); }
-  .price-card.onezuone { background:var(--pink); color:var(--black); }
   .price-card.beta {
     background:var(--card-dark); color:var(--cream);
     border:2px solid var(--pink);
@@ -185,33 +183,24 @@
     padding:7px 18px; border-radius:999px; white-space:nowrap;
   }
   .price-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:32px; gap:12px; }
-  .price-label { font-family:'DM Mono',monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; }
-  .price-card.onezuone .price-label { color:var(--black); opacity:0.7; }
-  .price-card.core .price-label, .price-card.beta .price-label { color:var(--muted-dark); }
+  .price-label { font-family:'DM Mono',monospace; font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted-dark); }
   .price-badge {
     font-family:'DM Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase;
     border:1px solid currentColor; border-radius:999px; padding:5px 12px; white-space:nowrap; opacity:0.75;
   }
-  .price-amount { font-family:'Anton',sans-serif; font-size:clamp(44px,5vw,56px); line-height:1; margin-bottom:6px; }
-  .price-card.beta .price-amount { color:var(--pink); }
-  .price-was { font-family:'DM Mono',monospace; font-size:12px; letter-spacing:0.08em; color:var(--muted-dark); margin-bottom:28px; }
-  .price-spacer { margin-bottom:28px; }
+  .price-spacer { margin-bottom:16px; }
   .price-list { list-style:none; margin-bottom:32px; flex-grow:1; }
   .price-list li {
-    font-size:14px; line-height:1.7; padding:10px 0; border-bottom:1px solid;
+    font-size:14px; line-height:1.7; padding:10px 0; border-bottom:1px solid; border-color:var(--line-dark); color:var(--muted-dark);
   }
-  .price-card.core .price-list li, .price-card.beta .price-list li { border-color:var(--line-dark); color:var(--muted-dark); }
-  .price-card.onezuone .price-list li { border-color:rgba(10,10,10,0.18); color:rgba(10,10,10,0.75); }
   .price-list li:last-child { border-bottom:none; }
   .price-cta {
     display:flex; align-items:center; justify-content:center; gap:8px;
     border:none; border-radius:999px; padding:16px 24px; font-size:14px; font-weight:500;
     cursor:pointer; transition:opacity .2s; width:100%;
+    background:var(--pink); color:var(--black);
   }
   .price-cta:hover { opacity:0.85; }
-  .price-card.core .price-cta { background:var(--cream); color:var(--black); }
-  .price-card.onezuone .price-cta { background:var(--black); color:var(--cream); }
-  .price-card.beta .price-cta { background:var(--pink); color:var(--black); }
 
   /* ============ 06 / BEWERBUNG ============ */
   .bewerbung-head { text-align:center; max-width:760px; margin:0 auto 64px; }
@@ -560,53 +549,19 @@
 <!-- 05 / PREISE -->
 <section class="section section-dark">
   <div class="container">
-    <p class="eyebrow reveal">05 / PREISE</p>
+    <p class="eyebrow reveal">05 / BETA</p>
     <div class="prices-top">
-      <h2 class="headline reveal">WÄHLE DEINEN<br>ARBEITSMODUS.</h2>
-      <p class="prices-note reveal">RATENZAHLUNG MÖGLICH</p>
+      <h2 class="headline reveal">DEIN EINSTIEG IN<br>DIE BETA-KOHORTE.</h2>
     </div>
 
-    <div class="price-cards reveal">
-      <div class="price-card core">
-        <div class="price-head">
-          <span class="price-label">ATHENA / CORE</span>
-          <span class="price-badge">20–30 PLÄTZE</span>
-        </div>
-        <div class="price-amount">590 €</div>
-        <div class="price-spacer"></div>
-        <ul class="price-list">
-          <li>4 Wochen ATHENA System</li>
-          <li>Weekly Phase Gates</li>
-          <li>Daily Quests &amp; Momentum Points</li>
-          <li>Community und Feedback</li>
-        </ul>
-        <button class="price-cta" data-plan="core" data-plan-label="ATHENA CORE">Für Core bewerben →</button>
-      </div>
-
-      <div class="price-card onezuone">
-        <div class="price-head">
-          <span class="price-label">ATHENA / 1:1</span>
-          <span class="price-badge">6–8 PLÄTZE</span>
-        </div>
-        <div class="price-amount">890 €</div>
-        <div class="price-spacer"></div>
-        <ul class="price-list">
-          <li>Alles aus ATHENA Core</li>
-          <li>Persönliche 1:1 Begleitung</li>
-          <li>Direkte Arbeit an deinem Engpass</li>
-          <li>Individuelle Entscheidungen, schneller</li>
-        </ul>
-        <button class="price-cta" data-plan="1zu1" data-plan-label="ATHENA 1:1">Für 1:1 bewerben →</button>
-      </div>
-
+    <div class="price-cards price-cards--single reveal">
       <div class="price-card beta">
         <span class="beta-tag">NUR DIESE KOHORTE</span>
         <div class="price-head">
           <span class="price-label">ATHENA / BETA</span>
           <span class="price-badge">LIMITIERT</span>
         </div>
-        <div class="price-amount">0 €</div>
-        <div class="price-was">STATT 590 €</div>
+        <div class="price-spacer"></div>
         <ul class="price-list">
           <li>Voller Zugang zum ATHENA System</li>
           <li>Du gestaltest das Programm mit</li>
