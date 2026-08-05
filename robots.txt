@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://hernextlvl.com/sitemap.xml
