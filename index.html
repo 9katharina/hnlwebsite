@@ -30,7 +30,7 @@
 
   h1,h2,h3,.headline {
     font-family:'Anton',sans-serif; text-transform:uppercase;
-    line-height:0.95; letter-spacing:-0.01em; font-weight:400;
+    line-height:0.95; letter-spacing:normal; font-weight:400; text-rendering:optimizeLegibility;
   }
   .headline { font-size:clamp(48px,6.5vw,104px); }
   .eyebrow {
@@ -120,8 +120,8 @@
   }
 
   /* ============ 03 / DAS SYSTEM ============ */
-  .stats-row { display:grid; grid-template-columns:repeat(5,1fr); gap:16px; margin-bottom:24px; }
-  @media (max-width:960px) { .stats-row { grid-template-columns:repeat(3,1fr); } }
+  .stats-row { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:24px; }
+  @media (max-width:960px) { .stats-row { grid-template-columns:repeat(2,1fr); } }
   @media (max-width:640px) { .stats-row { grid-template-columns:1fr; } }
   .stat-card { background:var(--black); border:1px solid var(--line-dark); border-radius:20px; padding:24px; }
   .stat-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
@@ -431,7 +431,7 @@
     <p class="eyebrow reveal">02 / WAS ATHENA IST</p>
     <div class="wai-top">
       <h2 class="headline reveal">4 WOCHEN.<br>4 PHASEN.</h2>
-      <p class="wai-sub reveal">Kein Wissensarchiv. Ein Arbeitszyklus mit klaren Gates. Du bewegst dein Projekt von Beweis zu Zugkraft.</p>
+      <p class="wai-sub reveal">Kein Wissensarchiv. Ein Arbeitszyklus mit klaren Gates. Du bewegst dein Projekt von Beweis zu Zugkraft. Die Buchstaben sind Ränge, keine Noten — du arbeitest dich von E bis B hoch.</p>
     </div>
 
     <div class="phases reveal">
@@ -490,11 +490,6 @@
       </div>
       <div class="stat-card">
         <div class="stat-head"><span class="stat-tag">STAT 04</span><span class="stat-dot"></span></div>
-        <div class="stat-name">Clarity</div>
-        <p class="stat-text">Wissen, was jetzt zählt. Und was nicht.</p>
-      </div>
-      <div class="stat-card">
-        <div class="stat-head"><span class="stat-tag">STAT 05</span><span class="stat-dot"></span></div>
         <div class="stat-name">Courage</div>
         <p class="stat-text">Die Handlung wählen, die dich exponiert.</p>
       </div>
@@ -567,7 +562,7 @@
         <ul class="price-list">
           <li>Voller Zugang zum ATHENA System</li>
           <li>Du gestaltest das Programm mit</li>
-          <li>Wöchentliches Feedback an uns</li>
+          <li>Wöchentliches Feedback von uns</li>
           <li>Danach: Testimonial und Ergebnis</li>
         </ul>
         <button class="price-cta" data-plan="beta" data-plan-label="ATHENA BETA">Für Beta bewerben →</button>

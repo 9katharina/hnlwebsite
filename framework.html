@@ -30,7 +30,7 @@
 
   h1,h2,h3,.headline {
     font-family:'Anton',sans-serif; text-transform:uppercase;
-    line-height:0.95; letter-spacing:-0.01em; font-weight:400;
+    line-height:0.95; letter-spacing:normal; font-weight:400; text-rendering:optimizeLegibility;
   }
   .headline { font-size:clamp(48px,6.5vw,104px); }
   .eyebrow {
@@ -138,7 +138,7 @@
   .vps-question { font-family:'Anton',sans-serif; font-size:20px; text-transform:uppercase; color:var(--cream); margin-bottom:16px; }
   .vps-explain { font-size:15px; line-height:1.8; color:var(--muted-dark); }
 
-  .vps-anchor { text-align:center; padding:60px 0; }
+  .vps-anchor { text-align:center; padding:60px 0 0; }
   .vps-anchor p { font-family:'Anton',sans-serif; font-size:clamp(28px,5vw,52px); color:var(--pink); text-transform:uppercase; line-height:1.05; }
 
   .apply-row { display:grid; grid-template-columns:200px 1fr; gap:24px; padding:24px 0; border-bottom:1px solid var(--line-light); align-items:baseline; }
@@ -214,7 +214,7 @@
       <div class="vps-content">
         <p class="vps-name">Values</p>
         <p class="vps-question">Was zählt für dich?</p>
-        <p class="vps-explain">Werte sind die Richtung. Nicht das, was gut klingt — das, wofür du tatsächlich Zeit ausgibst. Wer seine Werte nicht benennen kann, übernimmt fremde.</p>
+        <p class="vps-explain">Werte sind die Richtung. Nicht das, was gut klingt, sondern das, wofür du tatsächlich Zeit ausgibst. Wer seine Werte nicht benennen kann, übernimmt fremde.</p>
       </div>
     </div>
     <div class="vps-card reveal">
