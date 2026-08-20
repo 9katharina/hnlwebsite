@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Über uns — Her Next Level</title>
+<title>Über uns · Her Next Level</title>
 <link rel="icon" type="image/png" href="assets/images/favicon.png">
 <meta name="description" content="Her Next Level ist aus einer Beobachtung entstanden, nicht aus einem Businessplan.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,8 +32,10 @@
   h1,h2,h3,.headline {
     font-family:'Playfair Display',serif; text-transform:uppercase;
     line-height:1.05; letter-spacing:0.005em; font-weight:700; text-rendering:optimizeLegibility;
+    overflow-wrap:break-word;
   }
   .headline { font-size:clamp(48px,6.5vw,104px); }
+  @media (max-width:640px) { .headline { font-size:clamp(38px,9vw,64px); } }
   .eyebrow {
     font-family:'DM Mono',monospace; font-size:11px; letter-spacing:0.22em;
     text-transform:uppercase; color:var(--pink);
@@ -127,7 +129,7 @@
   /* ============ PAGE-SPECIFIC ============ */
   .about-grid { display:grid; grid-template-columns:55fr 45fr; gap:56px; align-items:start; }
   @media (max-width:900px) { .about-grid { grid-template-columns:1fr; gap:32px; } }
-  .about-headline { font-size:clamp(34px,4.4vw,58px); color:var(--black); }
+  .about-headline { font-size:clamp(34px,4.4vw,58px); color:var(--black); min-width:0; }
   .about-copy { font-size:16px; line-height:1.85; color:var(--muted-light); }
   .about-copy p + p { margin-top:16px; }
   .about-copy strong { font-weight:700; color:var(--black); }
@@ -232,7 +234,7 @@
         <div class="founder-body">
           <p class="founder-role-v2">Co-Founderin / Programm &amp; Community</p>
           <h3 class="founder-name-v2">Mina</h3>
-          <p class="founder-text-v2">Hi, ich bin Mina. Ich war schon immer davon überzeugt, dass Menschen mehr schaffen können, als sie sich zutrauen — und dass es scheißegal ist, was andere darüber denken. Genau diese Überzeugung lebe ich mit HNL. Ich bin die, die dich anstupst, wenn du gerade dabei bist, dich selbst kleinzureden.</p>
+          <p class="founder-text-v2">Hi, ich bin Mina. Ich war schon immer davon überzeugt, dass Menschen mehr schaffen können, als sie sich zutrauen, und dass es scheißegal ist, was andere darüber denken. Genau diese Überzeugung lebe ich mit HNL. Ich bin die, die dich anstupst, wenn du gerade dabei bist, dich selbst kleinzureden.</p>
         </div>
       </div>
     </div>

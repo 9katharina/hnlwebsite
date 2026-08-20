@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mythologie — Her Next Level</title>
+<title>Mythologie · Her Next Level</title>
 <link rel="icon" type="image/png" href="assets/images/favicon.png">
 <meta name="description" content="Der Name ist keine Dekoration. Er beschreibt, welche Art von Stärke wir meinen.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,8 +32,10 @@
   h1,h2,h3,.headline {
     font-family:'Playfair Display',serif; text-transform:uppercase;
     line-height:1.05; letter-spacing:0.005em; font-weight:700; text-rendering:optimizeLegibility;
+    overflow-wrap:break-word;
   }
   .headline { font-size:clamp(48px,6.5vw,104px); }
+  @media (max-width:640px) { .headline { font-size:clamp(38px,9vw,64px); } }
   .eyebrow {
     font-family:'DM Mono',monospace; font-size:11px; letter-spacing:0.22em;
     text-transform:uppercase; color:var(--pink);
@@ -223,17 +225,17 @@
       <div class="moira-card-v2">
         <p class="moira-name-v2">Klotho</p>
         <p class="moira-myth">Die Spinnerin. Sie beginnt den Faden.</p>
-        <p class="moira-maps"><b>Values</b> — Der Anfang. Woraus dein Leben überhaupt gemacht ist.</p>
+        <p class="moira-maps"><b>Values</b>: Der Anfang. Woraus dein Leben überhaupt gemacht ist.</p>
       </div>
       <div class="moira-card-v2">
         <p class="moira-name-v2">Lachesis</p>
         <p class="moira-myth">Die Zuteilerin. Sie misst die Länge und bestimmt den Verlauf.</p>
-        <p class="moira-maps"><b>Principles</b> — Die Entscheidungen, die den Weg formen.</p>
+        <p class="moira-maps"><b>Principles</b>: Die Entscheidungen, die den Weg formen.</p>
       </div>
       <div class="moira-card-v2">
         <p class="moira-name-v2">Atropos</p>
         <p class="moira-myth">Die Unabwendbare. Sie schneidet ab.</p>
-        <p class="moira-maps"><b>Standards</b> — Was du beendest, ablehnst und nicht mehr zulässt.</p>
+        <p class="moira-maps"><b>Standards</b>: Was du beendest, ablehnst und nicht mehr zulässt.</p>
       </div>
     </div>
 

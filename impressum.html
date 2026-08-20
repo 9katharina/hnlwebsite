@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Impressum — Her Next Level</title>
+<title>Impressum · Her Next Level</title>
 <link rel="icon" type="image/png" href="assets/images/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700;800&family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -31,8 +31,10 @@
   h1,h2,h3,.headline {
     font-family:'Playfair Display',serif; text-transform:uppercase;
     line-height:1.05; letter-spacing:0.005em; font-weight:700; text-rendering:optimizeLegibility;
+    overflow-wrap:break-word;
   }
   .headline { font-size:clamp(48px,6.5vw,104px); }
+  @media (max-width:640px) { .headline { font-size:clamp(38px,9vw,64px); } }
   .eyebrow {
     font-family:'DM Mono',monospace; font-size:11px; letter-spacing:0.22em;
     text-transform:uppercase; color:var(--pink);

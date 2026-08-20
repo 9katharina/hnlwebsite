@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ATHENA — Her Next Level</title>
+<title>ATHENA · Her Next Level</title>
 <link rel="icon" type="image/png" href="assets/images/favicon.png">
 <meta name="description" content="Vier Wochen für Frauen, die nicht mehr erklären wollen, warum ihr Ziel Priorität hat.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,8 +32,10 @@
   h1,h2,h3,.headline {
     font-family:'Playfair Display',serif; text-transform:uppercase;
     line-height:1.05; letter-spacing:0.005em; font-weight:700; text-rendering:optimizeLegibility;
+    overflow-wrap:break-word;
   }
   .headline { font-size:clamp(48px,6.5vw,104px); }
+  @media (max-width:640px) { .headline { font-size:clamp(38px,9vw,64px); } }
   .eyebrow {
     font-family:'DM Mono',monospace; font-size:11px; letter-spacing:0.22em;
     text-transform:uppercase; color:var(--pink);
@@ -66,6 +68,7 @@
   }
   @media (max-width:640px) { .hero-row { padding:0 24px; } }
   .hero-row span { font-family:'Playfair Display',serif; font-weight:700; text-transform:uppercase; line-height:0.95; letter-spacing:0.005em; font-size:clamp(60px,10.4vw,178px); }
+  @media (max-width:640px) { .hero-row span { font-size:clamp(30px,9vw,60px); } }
   .hero-row.cream span { color:var(--cream); }
   .hero-row.pink span { color:var(--pink); }
 
@@ -92,7 +95,7 @@
   /* ============ 01 / DAS PROBLEM ============ */
   .problem-grid { display:grid; grid-template-columns:60fr 40fr; gap:56px; align-items:end; }
   @media (max-width:900px) { .problem-grid { grid-template-columns:1fr; gap:32px; } }
-  .problem-headline { font-size:clamp(40px,5.2vw,72px); line-height:1.05; }
+  .problem-headline { font-size:clamp(40px,5.2vw,72px); line-height:1.05; min-width:0; }
   .problem-headline .black-part { color:var(--black); }
   .problem-headline .pink-part { color:var(--pink); }
   .problem-copy { font-size:16px; line-height:1.8; color:var(--muted-light); }
@@ -239,7 +242,7 @@
   .upload-text { font-size:13.5px; color:var(--muted-dark); margin-bottom:12px; }
   .upload-checklist { list-style:none; margin-bottom:20px; }
   .upload-checklist li { font-size:13.5px; line-height:1.7; color:var(--cream); padding-left:18px; position:relative; }
-  .upload-checklist li::before { content:'—'; position:absolute; left:0; color:var(--pink); }
+  .upload-checklist li::before { content:'\2022'; position:absolute; left:0; color:var(--pink); }
   .video-link-input {
     width:100%; border:none; border-bottom:1px solid var(--line-dark); background:transparent;
     font-family:'DM Sans',sans-serif; font-size:15px; color:var(--cream); outline:none; padding:10px 0;
@@ -432,7 +435,7 @@
     <p class="eyebrow reveal">02 / WAS ATHENA IST</p>
     <div class="wai-top">
       <h2 class="headline reveal">4 WOCHEN.<br>4 PHASEN.</h2>
-      <p class="wai-sub reveal">Kein Wissensarchiv. Ein Arbeitszyklus mit klaren Gates. Du bewegst dein Projekt von Beweis zu Zugkraft. Die Buchstaben sind Ränge, keine Noten — du arbeitest dich von E bis B hoch.</p>
+      <p class="wai-sub reveal">Kein Wissensarchiv. Ein Arbeitszyklus mit klaren Gates. Du bewegst dein Projekt von Beweis zu Zugkraft. Die Buchstaben sind Ränge, keine Noten. Du arbeitest dich von E bis B hoch.</p>
     </div>
 
     <div class="phases reveal">

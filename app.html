@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>App — Her Next Level</title>
+<title>App · Her Next Level</title>
 <link rel="icon" type="image/png" href="assets/images/favicon.png">
 <meta name="description" content="Die ATHENA App macht Verhalten sichtbar. Kein Feed, kein Streak-Zwang, keine Belohnung fürs Anwesendsein.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,8 +32,10 @@
   h1,h2,h3,.headline {
     font-family:'Playfair Display',serif; text-transform:uppercase;
     line-height:1.05; letter-spacing:0.005em; font-weight:700; text-rendering:optimizeLegibility;
+    overflow-wrap:break-word;
   }
   .headline { font-size:clamp(48px,6.5vw,104px); }
+  @media (max-width:640px) { .headline { font-size:clamp(38px,9vw,64px); } }
   .eyebrow {
     font-family:'DM Mono',monospace; font-size:11px; letter-spacing:0.22em;
     text-transform:uppercase; color:var(--pink);
@@ -127,7 +129,7 @@
   /* ============ PAGE-SPECIFIC ============ */
   .app-grid { display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:start; }
   @media (max-width:900px) { .app-grid { grid-template-columns:1fr; gap:32px; } }
-  .app-headline-light { font-size:clamp(30px,4.2vw,48px); color:var(--black); }
+  .app-headline-light { font-size:clamp(30px,4.2vw,48px); color:var(--black); min-width:0; }
   .app-copy { font-size:16px; line-height:1.85; color:var(--muted-light); }
   .app-copy p + p { margin-top:16px; }
 
@@ -248,7 +250,7 @@
       <span class="rank-item">B TRACTION</span>
     </div>
 
-    <p class="ranks-text reveal" style="padding-bottom:64px;">Die Buchstaben sind Ränge, keine Noten — eine Skala, auf der du dich hocharbeitest, von E bis B. Ränge steigen kalenderwochenweise. Nicht durch Anwesenheit, sondern durch erreichte Gates. Wer ein Gate nicht schafft, bleibt und bekommt Klarheit darüber, woran es lag.</p>
+    <p class="ranks-text reveal" style="padding-bottom:64px;">Die Buchstaben sind Ränge, keine Noten: eine Skala, auf der du dich hocharbeitest, von E bis B. Ränge steigen kalenderwochenweise. Nicht durch Anwesenheit, sondern durch erreichte Gates. Wer ein Gate nicht schafft, bleibt und bekommt Klarheit darüber, woran es lag.</p>
   </div>
 </section>
 
@@ -291,7 +293,7 @@
       </div>
       <div class="mq-card">
         <p class="mq-label">Daily Quest</p>
-        <p class="mq-text">Jeden Tag eine neue, klar definierte Mission — passend zu deiner aktuellen Phase. Nicht immer dieselbe Aufgabe. Klein, unspektakulär, täglich.</p>
+        <p class="mq-text">Jeden Tag eine neue, klar definierte Mission, passend zu deiner aktuellen Phase. Nicht immer dieselbe Aufgabe. Klein, unspektakulär, täglich.</p>
       </div>
     </div>
   </div>
@@ -303,7 +305,7 @@
     <div class="flag-box reveal">
       <p class="flag-label">Avoidance Flag</p>
       <h2 class="flag-title">Wenn du ausweichst, siehst du es.</h2>
-      <p class="flag-text">Bleibt eine relevante Aktion liegen, setzt das System eine Markierung. Du hast 48 Stunden, sie aufzulösen — durch Handeln oder durch eine bewusste Entscheidung. Was du nicht darfst: so tun, als wäre nichts.</p>
+      <p class="flag-text">Bleibt eine relevante Aktion liegen, setzt das System eine Markierung. Du hast 48 Stunden, sie aufzulösen: durch Handeln oder durch eine bewusste Entscheidung. Was du nicht darfst: so tun, als wäre nichts.</p>
     </div>
   </div>
 </section>

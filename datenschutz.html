@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Datenschutz — Her Next Level</title>
+<title>Datenschutz · Her Next Level</title>
 <link rel="icon" type="image/png" href="assets/images/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700;800&family=DM+Sans:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -31,8 +31,10 @@
   h1,h2,h3,.headline {
     font-family:'Playfair Display',serif; text-transform:uppercase;
     line-height:1.05; letter-spacing:0.005em; font-weight:700; text-rendering:optimizeLegibility;
+    overflow-wrap:break-word;
   }
   .headline { font-size:clamp(48px,6.5vw,104px); }
+  @media (max-width:640px) { .headline { font-size:clamp(38px,9vw,64px); } }
   .eyebrow {
     font-family:'DM Mono',monospace; font-size:11px; letter-spacing:0.22em;
     text-transform:uppercase; color:var(--pink);
@@ -129,7 +131,7 @@
   .legal-text a { color:var(--cream); text-decoration:underline; }
   .legal-list { list-style:none; margin:12px 0; }
   .legal-list li { font-size:15px; line-height:1.7; color:var(--muted-dark); padding:6px 0; position:relative; padding-left:18px; }
-  .legal-list li::before { content:'—'; position:absolute; left:0; color:var(--pink); }
+  .legal-list li::before { content:'\2022'; position:absolute; left:0; color:var(--pink); }
   .legal-list li strong { color:var(--cream); font-weight:500; }
 
   .highlight-box { border-left:2px solid var(--pink); background:var(--card-dark); padding:28px 32px; margin-bottom:56px; }
@@ -216,9 +218,9 @@
       <div class="legal-block reveal">
         <p class="legal-title">4. Dienstleister</p>
         <ul class="legal-list">
-          <li><strong>Netlify</strong> (Netlify Inc., USA) — Hosting und Verarbeitung der Formulareingaben inklusive Video-Upload. Übermittlung in die USA auf Grundlage der EU-Standardvertragsklauseln.</li>
-          <li><strong>Google Workspace</strong> (Google Ireland Ltd.) — E-Mail-Kommunikation über hello@hernextlvl.com.</li>
-          <li><strong>Calendly</strong> (Calendly LLC, USA) — Terminvereinbarung für Vorgespräche, sofern du einen Termin buchst.</li>
+          <li><strong>Netlify</strong> (Netlify Inc., USA): Hosting und Verarbeitung der Formulareingaben inklusive Video-Upload. Übermittlung in die USA auf Grundlage der EU-Standardvertragsklauseln.</li>
+          <li><strong>Google Workspace</strong> (Google Ireland Ltd.): E-Mail-Kommunikation über hello@hernextlvl.com.</li>
+          <li><strong>Calendly</strong> (Calendly LLC, USA): Terminvereinbarung für Vorgespräche, sofern du einen Termin buchst.</li>
         </ul>
         <p class="legal-text">Alle Anbieter sind vertraglich zur DSGVO-konformen Verarbeitung verpflichtet.</p>
       </div>

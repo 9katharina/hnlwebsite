@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Framework — Her Next Level</title>
+<title>Framework · Her Next Level</title>
 <link rel="icon" type="image/png" href="assets/images/favicon.png">
 <meta name="description" content="Values, Principles, Standards. Drei Ebenen, die bestimmen, was du tust, wenn niemand zuschaut.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,8 +32,10 @@
   h1,h2,h3,.headline {
     font-family:'Playfair Display',serif; text-transform:uppercase;
     line-height:1.05; letter-spacing:0.005em; font-weight:700; text-rendering:optimizeLegibility;
+    overflow-wrap:break-word;
   }
   .headline { font-size:clamp(48px,6.5vw,104px); }
+  @media (max-width:640px) { .headline { font-size:clamp(38px,9vw,64px); } }
   .eyebrow {
     font-family:'DM Mono',monospace; font-size:11px; letter-spacing:0.22em;
     text-transform:uppercase; color:var(--pink);
@@ -127,7 +129,7 @@
   /* ============ PAGE-SPECIFIC ============ */
   .fw-grid { display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:start; }
   @media (max-width:900px) { .fw-grid { grid-template-columns:1fr; gap:32px; } }
-  .fw-headline { font-size:clamp(30px,4vw,48px); color:var(--black); }
+  .fw-headline { font-size:clamp(30px,4vw,48px); color:var(--black); min-width:0; }
   .fw-copy { font-size:16px; line-height:1.85; color:var(--muted-light); }
   .fw-copy p + p { margin-top:16px; }
 
@@ -231,7 +233,7 @@
       <div class="vps-content">
         <p class="vps-name">Standards</p>
         <p class="vps-question">Was akzeptierst du?</p>
-        <p class="vps-explain">Standards sind die Untergrenze. Nicht dein Ziel, sondern das, worunter du nicht gehst — auch an schlechten Tagen.</p>
+        <p class="vps-explain">Standards sind die Untergrenze. Nicht dein Ziel, sondern das, worunter du nicht gehst, auch an schlechten Tagen.</p>
       </div>
     </div>
 
